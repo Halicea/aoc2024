@@ -7,24 +7,25 @@ instr = open(f"{__file__[:-3]}.txt").read().split("\n")[:-1]
 # 1 3 6 7 9
 # """.split("\n")[:-1]
 input = [[int(y) for y in x.split()] for x in instr]
-p1 = None
+
 
 def analyze(inp):
-    if len(inp) <= 2: 
+    if len(inp) <= 2:
         return True
-    inc=inp[0] < inp[1]
-    for i in range(len(inp)-1):
-        if abs(inp[i] - inp[i+1]) > 3 or inp[i] == inp[i+1]:
+    inc = inp[0] < inp[1]
+    for i in range(len(inp) - 1):
+        if abs(inp[i] - inp[i + 1]) > 3 or inp[i] == inp[i + 1]:
             return False
         if inc:
-            if inp[i] > inp[i+1] :
+            if inp[i] > inp[i + 1]:
                 return False
         else:
-            if inp[i] < inp[i+1]:
+            if inp[i] < inp[i + 1]:
                 return False
     return True
 
-def run( tolerate = False):
+
+def run(tolerate=False):
     count = 0
     for inp in input:
         ok = analyze(inp)
@@ -38,10 +39,11 @@ def run( tolerate = False):
         for i in range(len(inp)):
             inpa = [inp[j] for j in range(len(inp)) if i != j]
             ok = analyze(inpa)
-            if ok: 
+            if ok:
                 count += 1
                 break
     return count
+
 
 p1 = run()
 print("p1", p1)
