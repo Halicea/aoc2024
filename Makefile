@@ -1,4 +1,5 @@
 include config
+include .env
 
 run: show_day
 	python $(DAY).py
