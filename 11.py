@@ -1,6 +1,5 @@
 instr = [int(x) for x in open(__import__("sys").argv[1]).read().strip().split(" ")]
 
-
 def blinker(stone, times, memo={}):
     key = (stone, times)
     if key not in memo:
@@ -21,7 +20,5 @@ def blink(stone):
     return [2024 * stone]
 
 
-p1 = sum([blinker(stone, 25) for stone in instr])
-p2 = sum([blinker(stone, 75) for stone in instr])
-print("p1", p1)
-print("p2", p2)
+print("p1", sum([blinker(stone, 25) for stone in instr]))
+print("p2", sum([blinker(stone, 75) for stone in instr]))
