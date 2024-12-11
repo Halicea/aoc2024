@@ -2,10 +2,12 @@ instr = [int(x) for x in open(__import__("sys").argv[1]).read().strip().split(" 
 
 
 def blinker(stone, times, memo={}):
-    key = f"{stone},{times}"
+    key = (stone, times)
     if key not in memo:
-        memo[key] = len(blink(stone)) if times == 1 \
-                else sum([blinker(stone, times - 1, memo) for stone in blink(stone)])
+        if times == 1:
+            memo[key] = len(blink(stone))
+        else:
+            memo[key] = sum([blinker(stone, times - 1, memo) for stone in blink(stone)])
     return memo[key]
 
 
