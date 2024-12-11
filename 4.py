@@ -1,4 +1,4 @@
-instr = [x[:-1] for x in open(f"{__file__[:-3]}.txt").readlines()]
+instr = [x[:-1] for x in open(f"{__file__[:-3]}.input").readlines()]
 
 word = "XMAS"
 p1 = 0

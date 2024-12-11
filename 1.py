@@ -1,4 +1,5 @@
-input = open(f"{__file__[:-3]}.txt").read().split("\n")[:-1]
+f = open(__import__("sys").argv[1])
+input = f.read().split("\n")[:-1]
 input = [[int(j) for j in i.split()] for i in input]
 
 left = sorted([x[0] for x in input])

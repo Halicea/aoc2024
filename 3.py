@@ -1,6 +1,6 @@
 import re
 
-instr = open(f"{__file__[:-3]}.txt").read()
+instr = open(f"{__file__[:-3]}.input").read()
 pattern = r"(mul\(\d{1,3},\d{1,3}\))|do\(\)|don\'t\(\)"
 sum = 0
 domul = True

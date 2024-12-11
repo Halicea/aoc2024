@@ -1,4 +1,4 @@
-instr = open(f"{__file__[:-3]}.txt").read().split("\n")[:-1]
+instr = open(f"{__file__[:-3]}.input").read().split("\n")[:-1]
 # instr = """7 6 4 2 1
 # 1 2 7 8 9
 # 9 7 6 2 1
