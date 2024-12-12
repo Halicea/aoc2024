@@ -33,34 +33,34 @@ def get_region(start, region=[]):
 
 def is_concave_edge(pos, region):
     nbr = neighbors(pos, region)
-    nbr_pairs = [
+    nbr_diags = [
         (n1, n2) for n1, n2 in combinations(nbr, 2) if n1[0] != n2[0] and n1[1] != n2[1]
     ]
     edges = 0
-    for n1, n2 in nbr_pairs:
-        if n1[0] != pos[0]:
-            if (n1[0], n2[1]) not in region:
-                edges += 1
-        else:
-            if (n2[0], n1[1]) not in region:
-                edges += 1
+    for n1, n2 in nbr_diags:
+        if n1[0] != pos[0] and (n1[0], n2[1]) not in region:
+            edges += 1
+        elif (n2[0], n1[1]) not in region:
+            edges += 1
     return edges
 
 
 def is_convex_edge(pos, region):
     nbr = neighbors(pos, region)
     nbrlen = len(nbr)
+    res = 0
     if nbrlen == 0:
-        return 4
-    if nbrlen == 1:
-        return 2
-    if nbrlen == 2:
+        res += 4
+    elif nbrlen == 1:
+        res += 2
+    elif nbrlen == 2:
         if nbr[0][0] == nbr[1][0] or nbr[0][1] == nbr[1][1]:
-            return 0
+            res += 0
         else:
-            return 1
+            res += 1
     else:
-        return 0
+        res += 0
+    return res
 
 
 def print_region(region):
@@ -79,7 +79,7 @@ p2 = 0
 while positions:
     v = val(positions[0])
     pp = positions[0]
-    if pp == (4,7):
+    if pp == (4, 7):
         print("here", v)
     reg = get_region(positions[0], region=[])
     if v == ".":
