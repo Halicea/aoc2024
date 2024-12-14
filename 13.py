@@ -9,52 +9,12 @@ class P:
     x: int = 0
     y: int = 0
 
-    cost: int = 0
-
 
 @dataclass
 class Machine:
     a: P = field(default_factory=P)
     b: P = field(default_factory=P)
     price: P = field(default_factory=P)
-    solution: P | None = field(default_factory=P)
-
-    def x(self):
-        return (self.a.x, self.b.x, self.price.x)
-
-    def y(self):
-        return (self.a.y, self.b.y, self.price.y)
-
-
-def solve(ba, bb, prize):
-    solutions = []
-    prize = prize
-    r1 = min(prize // ba + 1, 100)
-    r2 = min(prize // bb + 1, 100)
-
-    for i in range(r1):
-        for j in range(r2):
-            if (i * ba) + (j * bb) == prize:
-                cost = i * 3 + j
-                solutions.append(P(i, j, cost))
-    return solutions
-
-
-def solve2(m: Machine) -> P | None:
-    ax = m.a.x
-    bx = m.b.x
-    ay = m.a.y
-    by = m.b.y
-    x = m.price.x + 10000000000000
-    y = m.price.y + 10000000000000
-
-    i = (bx * y - by * x) / (ay * bx - by * ax)
-    j = (x - ax * i) / bx
-    cost = i * 3 + j
-    i, j, cost = int(i), int(j), int(cost)
-    if i * ax + j * bx == x:
-        return P(i, j, cost)
-    return None
 
 
 def ln2pt(line: str):
@@ -73,15 +33,23 @@ def ln2pt(line: str):
         ]
     )
 
+machines = [Machine(ln2pt(instr[i]), ln2pt(instr[i + 1]), ln2pt(instr[i + 2])) 
+    for i in range(0, len(instr), 4) if instr[i]]
 
-machines = []
-for i in range(0, len(instr), 4):
-    if not instr[i]:
-        continue
-    m = Machine(ln2pt(instr[i]), ln2pt(instr[i + 1]), ln2pt(instr[i + 2]))
-    m.solution = solve2(m)
-    if m.solution:
-        machines.append(m)
+def solve2(m: Machine, increase=0) -> int:
+    x = m.price.x + increase
+    y = m.price.y + increase
 
-p1 = sum([m.solution.cost for m in machines if m.solution])
+    i = (m.b.x * y - m.b.y * x) / (m.a.y * m.b.x - m.b.y * m.a.x)
+    j = (x - m.a.x * i) / m.b.x
+    cost = i * 3 + j
+    i, j, cost = int(i), int(j), int(cost)
+    if i * m.a.x + j * m.b.x == x:
+        return cost
+    return 0
+
+
+p1 = sum(map(lambda m: solve2(m, 100), machines))
+p2 = sum(map(lambda m: solve2(m), machines))
 print("p1", p1)
+print("p2", p2)
